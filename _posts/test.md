@@ -1,3 +1,8 @@
+---
+layout: post
+title: You're up and running!
+---
+
 [TOC]
 
 ## 王者荣耀
