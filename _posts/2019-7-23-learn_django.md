@@ -4,7 +4,7 @@ title: 学习django
 ---
 
 
-
+Django是python的一个web框架
 
 
 ### Django 2 零基础 - 待办清单网站
