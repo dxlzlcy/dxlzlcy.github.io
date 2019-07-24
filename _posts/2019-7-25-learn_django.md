@@ -1,6 +1,6 @@
 ---
-layout:post
-title:学习django
+layout: post
+title: 学习django
 ---
 
 
