@@ -1,6 +1,7 @@
 ---
 layout: post
 title: 学习scrapy
+category: 学习
 ---
 
 

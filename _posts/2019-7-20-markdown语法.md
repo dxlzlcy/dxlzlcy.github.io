@@ -3,6 +3,16 @@ layout: post
 title: markdown语法
 ---
 
+### typora快捷键
+
+`cmd+shift+L`:隐藏侧边栏
+
+`cmd shift b`:代码块
+
+`cmd b`:加粗
+
+
+
 
 
 一些常用的Markdown语法

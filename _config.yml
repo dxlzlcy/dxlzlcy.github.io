@@ -2,6 +2,19 @@
 # This file contains configuration flags to customize your site
 #
 
+# 自己加的
+markdown: kramdown
+
+defaults: 
+  -
+    scope:
+      path: ''
+      type: posts # 应用于`_posts`文件下的所有内容
+    values:
+      layout: post
+      # title: 没想好名字
+      # category: other
+
 # Name of your site (displayed in the header)
 name: 列车员的自习室
 

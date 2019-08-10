@@ -1,8 +1,10 @@
 ---
 layout: post
-title: tkinter开发
+title: 学习tkinter
+category: 学习
 ---
 
+{:toc}
 
 学习tkinter开发入门以及一个小demo
 
