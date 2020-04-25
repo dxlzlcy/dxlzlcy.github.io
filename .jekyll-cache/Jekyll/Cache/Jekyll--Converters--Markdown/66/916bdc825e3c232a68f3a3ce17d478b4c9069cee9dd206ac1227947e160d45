@@ -1,0 +1,252 @@
+I"�)<p><a href="https://www.youtube.com/watch?v=pxua_1vyFck&amp;list=PLLAZ4kZ9dFpOPV5C5Ay0pHaa0RJFhcmcB">jekyll youtube 教程</a></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jekyll new ga_blog
+<span class="nb">cd </span>ga_blog
+bundle <span class="nb">exec </span>jekyll serve
+
+</code></pre></div></div>
+
+<p>frant matter</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">layout</span><span class="pi">:</span> <span class="s">post</span>
+<span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">new</span><span class="nv"> </span><span class="s">title"</span>
+</code></pre></div></div>
+
+<p><a href="https://www.bilibili.com/video/BV1st411P7BY?from=search&amp;seid=6641841171916982188">教程地址</a></p>
+
+<h3 id="利用jekyll-now搭建github-page">利用<code class="highlighter-rouge">jekyll-now</code>搭建github page</h3>
+
+<p>利用jekyll搭建个人博客</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>gem <span class="nb">install </span>jekyll bundler
+
+jekyll new myblog
+<span class="nb">cd </span>myblog 
+jekyll serve
+</code></pre></div></div>
+
+<p>首先fork主页<a href="https://github.com/barryclark/jekyll-now">jekyll-now</a>，然后创建名为<code class="highlighter-rouge">username.github.io</code>的仓库</p>
+
+<p><code class="highlighter-rouge">clone</code>到本地，然后可以往里边加md文件，命名为<code class="highlighter-rouge">%Y-%M-%D-filename.md</code>，如果是未来的日期，则在主页上显示不了，开头为</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="na">layout</span><span class="pi">:</span> <span class="s">post</span>
+<span class="na">title</span><span class="pi">:</span> <span class="c1"># 想在主页上显示的标题</span>
+<span class="nn">---</span>
+</code></pre></div></div>
+
+<p>可以在本地预览博客主页，满意后再<code class="highlighter-rouge">git push</code>到GitHub</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem <span class="nb">install </span>github-pages
+
+jekyll serve 
+<span class="c"># 在 http://127.0.0.1:4000/ 可以预览效果</span>
+
+<span class="c"># 觉得满意之后</span>
+git add <span class="nt">-A</span>
+git commit <span class="nt">-m</span> <span class="s2">"aaa"</span>
+git push origin master 
+</code></pre></div></div>
+
+<h4 id="frant-matter">frant matter</h4>
+
+<p>date和title会覆盖从文件名中提取的信息，将md文件保存在<code class="highlighter-rouge">_post</code>文件里面就好，<code class="highlighter-rouge">_post</code>文件夹里可以创建很多文件夹</p>
+
+<div class="language-md highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="na">layout</span><span class="pi">:</span> <span class="s">post</span>
+<span class="na">title</span><span class="pi">:</span>  <span class="s2">"</span><span class="s">hi!"</span>
+<span class="na">date</span><span class="pi">:</span>   <span class="s">2019-07-25 12:42:33 +0800</span>
+<span class="na">categories</span><span class="pi">:</span> <span class="s">test1</span>
+<span class="na">author</span><span class="pi">:</span> <span class="s">lcy</span>
+<span class="nn">---</span>
+</code></pre></div></div>
+
+<h4 id="draft">draft</h4>
+
+<p>可以创建一个<code class="highlighter-rouge">_drafts</code>文件夹，里面的内容只有运行在<code class="highlighter-rouge">jekyll serve --draft</code>时才会显示</p>
+
+<h4 id="page">page</h4>
+
+<p>例如，在根目录下创建<code class="highlighter-rouge">donate.md</code>文件</p>
+
+<div class="language-md highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="na">layout</span><span class="pi">:</span> <span class="s">page</span>
+<span class="na">title</span><span class="pi">:</span> <span class="s">donation</span>
+<span class="na">permalink</span><span class="pi">:</span> <span class="s">/donate-me/</span>
+<span class="nn">---</span>
+
+you can donate me via xxxx@xx.com
+</code></pre></div></div>
+
+<h4 id="permalink">permalink</h4>
+
+<div class="language-md highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="na">layout</span><span class="pi">:</span> <span class="s">post</span>
+<span class="na">title</span><span class="pi">:</span>  <span class="s">hey</span>
+<span class="na">date</span><span class="pi">:</span>   <span class="s">2019-07-20</span>
+<span class="na">categories</span><span class="pi">:</span> <span class="s">test1 cat2</span>
+<span class="na">author</span><span class="pi">:</span> <span class="s">lcy</span>
+<span class="na">permalink</span><span class="pi">:</span> <span class="s">/:categories/:year/:month/:day/:title</span> <span class="c1">#或者任意填写</span>
+<span class="nn">---</span>
+</code></pre></div></div>
+
+<h4 id="frant-matter-default">frant matter default</h4>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 修改_config.yml</span>
+
+<span class="na">defaults</span><span class="pi">:</span> 
+  <span class="pi">-</span>
+    <span class="na">scope</span><span class="pi">:</span>
+      <span class="na">path</span><span class="pi">:</span> <span class="s1">'</span><span class="s">'</span>
+      <span class="na">type</span><span class="pi">:</span> <span class="s">posts</span> <span class="c1"># 应用于`_posts`文件下的所有内容</span>
+    <span class="na">values</span><span class="pi">:</span>
+      <span class="na">layout</span><span class="pi">:</span> <span class="s">post</span>
+      <span class="na">title</span><span class="pi">:</span> <span class="s">没想好名字</span>
+</code></pre></div></div>
+
+<h4 id="themes">themes</h4>
+
+<p><a href="https://rubygems.org/search?utf8=✓&amp;query=jekyll+theme">搜索jekyll theme</a></p>
+
+<p>Gemfile文件，添加</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem "minima", "~&gt; 2.0"
+gem "jekyll-theme-primer"
+</code></pre></div></div>
+
+<p>修改<code class="highlighter-rouge">_config.yml</code>中的theme</p>
+
+<p>然后执行</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle install
+bundle exec jekyll serve
+</code></pre></div></div>
+
+<p>如果报错，需要修改layout，可能没有post,page,home这些layout</p>
+
+<h4 id="layout">layout</h4>
+
+<p>创建<code class="highlighter-rouge">_layouts</code>文件夹</p>
+
+<p><code class="highlighter-rouge">post.html</code>文件</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+---
+layout: wrapper
+author: lcy
+---
+
+
+&lt;h1&gt;{ {page.title}}&lt;/h1&gt;         # {和{间多加了一个空格
+&lt;h2&gt;{ {layout.author}}&lt;/h2&gt;
+&lt;hr&gt;
+
+"{ { content }} "
+
+
+</code></pre></div></div>
+
+<p>wrapper.html，site文件配置在<code class="highlighter-rouge">_config.yml</code>中</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+    wrapper <span class="nt">&lt;br&gt;</span>
+    { % include header.html color="blue" % }
+    { {content}}
+    <span class="nt">&lt;br&gt;</span> wrapper
+
+<span class="nt">&lt;/body&gt;</span>
+
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">/_includes/header.html</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h1 style="color: { { include.color }}"&gt;{ { site.title }}&lt;/h1&gt;
+&lt;hr&gt;
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">_layout/home.html</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{ % for post in site.posts %}
+&lt;li&gt;&lt;a href="{ { post.url }} "&gt;{ { post.title }}&lt;/a&gt;&lt;/li&gt;
+{ % endfor %}
+</code></pre></div></div>
+
+<h4 id="if语句">if语句</h4>
+
+<p>mypost.html</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>---
+layout: wrapper
+author: lcy
+---
+
+
+{ % for post in site.posts %}
+&lt;li&gt;&lt;a style="{ % if post.title==page.title%}color:red{ % endif %}" href="{ { post.url }} "&gt;{ { post.title }}&lt;/a&gt;&lt;/li&gt;
+{ % endfor %}
+
+
+{ % if page.title == "bbb" and/or %}
+bbbbb
+{ % elsif page.title == "hey" %}
+heyhey
+{ % else %}
+nothing
+{ % endif %}
+
+&lt;h1&gt;{ {page.title}}&lt;/h1&gt;
+&lt;h2&gt;{ {layout.author}}&lt;/h2&gt;
+&lt;hr&gt;
+
+{ { content }}
+</code></pre></div></div>
+
+<h4 id="database">database</h4>
+
+<p><code class="highlighter-rouge">/_data/people.yml</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- name: "lcy"
+  age: 24
+
+- name: "yzx"
+  age: 28
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">home.html</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{ % for person in site.data.people %}
+{ {person.name}},{ {person.age}} &lt;br&gt;
+{ % endfor %}
+</code></pre></div></div>
+
+<h4 id="static-files">static files</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{ % for file in site.static_files %}
+{ {file.path}} &lt;br&gt;
+{ % endfor %}
+</code></pre></div></div>
+
+<p>可以设置<code class="highlighter-rouge">_config.yml</code>将某个文件夹的图片都显示出来，<a href="https://www.youtube.com/watch?v=fqFjuX4VZmU&amp;list=PLLAZ4kZ9dFpOPV5C5Ay0pHaa0RJFhcmcB&amp;index=18">详情请看</a></p>
+
+<h3 id="生成目录树">生成目录树</h3>
+
+<p>首先在<code class="highlighter-rouge">_config.yml</code>文件中添加<code class="highlighter-rouge">markdown:kramdown</code>一行</p>
+
+<p>然后在文章里需要生成目录树的地方加上</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- 目录
+{:toc}
+</code></pre></div></div>
+
+<p>搞定</p>
+
+:ET

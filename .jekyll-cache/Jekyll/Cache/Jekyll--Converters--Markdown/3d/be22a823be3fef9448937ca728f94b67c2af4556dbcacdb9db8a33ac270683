@@ -1,0 +1,23 @@
+I"�<p>Django是python的一个web框架</p>
+
+<h3 id="django-2-零基础---待办清单网站">Django 2 零基础 - 待办清单网站</h3>
+
+<p><a href="https://www.bilibili.com/video/av24293644/?p=6&amp;t=192">视频地址</a></p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install </span><span class="nv">django</span><span class="o">==</span>2.0.5
+django-admin startproject to_do_list
+<span class="nb">cd </span>to_do_list
+python manage.py runserver
+python manage.py startapp todolist <span class="c"># add it in setting.py</span>
+</code></pre></div></div>
+
+<p>创建文件夹<code class="highlighter-rouge">templates</code>，在里面新建一个<code class="highlighter-rouge">html</code>文件</p>
+
+<p>强制覆盖css样式，不管优先级</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">nav</span> <span class="nt">input</span> <span class="p">{</span>
+  <span class="nl">width</span><span class="p">:</span><span class="m">39%</span> <span class="err">!</span><span class="n">inportant</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+:ET

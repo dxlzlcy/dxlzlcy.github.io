@@ -101,3 +101,36 @@ open test.pdf
 
 - [pandoc does not recognize Chinese characters](https://stackoverflow.com/questions/40892725/pandoc-does-not-recognize-chinese-characters)
 
+
+
+### reveal-md
+
+~~~markdown
+# 上市公司治理
+## 副标题
+
+锦瑟无端五十弦，一弦一柱思华年。
+庄生晓梦迷蝴蝶，望帝春心托杜鹃。
+沧海月明珠有泪，蓝田日暖玉生烟。
+此情可待成追忆，只是当时已惘然。
+
+---
+
+# latex 模板
+## 副标题
+
+```
+\documentclass{article} 
+
+\usepackage{ctex}
+
+\begin{document}
+
+
+    
+\end{document}
+```
+
+
+~~~
+

@@ -1,0 +1,83 @@
+I"J<h3 id="typora快捷键">typora快捷键</h3>
+
+<p><code class="highlighter-rouge">cmd+shift+L</code>:隐藏侧边栏</p>
+
+<p><code class="highlighter-rouge">cmd shift b</code>:代码块</p>
+
+<p><code class="highlighter-rouge">cmd b</code>:加粗</p>
+
+<p>一些常用的Markdown语法</p>
+
+<p><em>倾斜</em></p>
+
+<p><strong>加粗</strong></p>
+
+<p><del>删除</del></p>
+
+<p>==高亮== ==hi==</p>
+
+<p>我是^上标^</p>
+
+<p>H<sub>2</sub>O</p>
+
+<p>x<sup>3</sup></p>
+
+<hr />
+
+<h3 id="表格">表格</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>name</th>
+      <th>age</th>
+      <th>gender</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>刘承翊</td>
+      <td>25</td>
+      <td>male</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="引用">引用</h3>
+
+<blockquote>
+  <p>世上本没有路，走的人多了，也就有了路</p>
+
+  <p>​																——鲁迅</p>
+</blockquote>
+
+<hr />
+
+<p>这是<a href="http://www.baidu.com">百度</a>链接</p>
+
+<p>​    这是一个代码块</p>
+
+<p>[ ]吃饭</p>
+
+<p>[ ]睡觉</p>
+
+<table>
+    <tr>
+        <th rowspan="2">值班人员</th>
+        <th>星期一</th>
+        <th>星期二</th>
+        <th>星期三</th>
+    </tr>
+    <tr>
+        <td>李强</td>
+        <td>张明</td>
+        <td>王平</td>
+    </tr>
+</table>
+
+:ET

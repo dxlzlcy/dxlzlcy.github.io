@@ -1,0 +1,241 @@
+I"[i<p>Nodejs+Express+Mongo实战TodoList(共17讲)</p>
+
+<p><a href="https://www.bilibili.com/video/av20196752?from=search&amp;seid=1584195348370140715">视频地址</a></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm init <span class="nt">-y</span>
+npm <span class="nb">install </span>express <span class="nt">-save</span>
+npm <span class="nb">install</span> <span class="nt">-g</span> nodemon
+</code></pre></div></div>
+
+<p>新建一个<code class="highlighter-rouge">app.js</code>文件</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">express</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+
+<span class="c1">// .get .post .delete</span>
+<span class="nx">app</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  	<span class="c1">// 可以返回json，列表，字符串</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="dl">'</span><span class="s1">hello world</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">})</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">3000</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">listen to 3000</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><a href="https://expressjs.com/en/4x/api.html">官方api链接</a></p>
+
+<p>路由参数</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">app</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/profile/:id</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  	<span class="nx">console</span><span class="p">.</span><span class="nx">dir</span><span class="p">()</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="dl">'</span><span class="s1">the id is </span><span class="dl">'</span><span class="o">+</span><span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<p>也可以用正则表达式</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">app</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/ab?cd</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  	<span class="nx">console</span><span class="p">.</span><span class="nx">dir</span><span class="p">()</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="dl">'</span><span class="s1">ab?cd</span><span class="dl">'</span><span class="p">;</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<p>类似这种query请求，可以这样取出</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// localhost:3000?name=lcy</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">dir</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="dl">'</span><span class="s1">homepage</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<p>post请求</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install </span>body-parser
+</code></pre></div></div>
+
+<p>可以用vscode插件REST Client来发送请求</p>
+
+<div class="language-http highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">POST</span> <span class="nn">http://localhost:3000</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">content-type</span><span class="p">:</span> <span class="s">application/json</span>
+
+<span class="p">{</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="s2">"Hendry"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"salary"</span><span class="p">:</span><span class="s2">"61888"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"age"</span><span class="p">:</span><span class="s2">"26"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="err">###</span><span class="w"> </span><span class="err">普通get请求</span><span class="w">
+</span><span class="err">http://localhost:</span><span class="mi">3000</span><span class="err">?name=lcy</span><span class="w">
+</span></code></pre></div></div>
+
+<p>REST client还支持代码生成，通过 Generate Code Snippet 命令来把HTTP请求生成出不同编程语言的代码：JavaScript, Python, C, C#, Java, PHP, Go, Ruby, Swift等等主流语言。</p>
+
+<p>示例，生成的python的requests库的代码</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"http://localhost:3000/"</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="s">"{</span><span class="se">\"</span><span class="s">name</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">Hendry</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">salary</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">61888</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">age</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">26</span><span class="se">\"</span><span class="s">}"</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">'content-type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">}</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s">"POST"</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h4 id="bodyparser可以处理表单内容和json内容">bodyParser可以处理表单内容和json内容</h4>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">express</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">bodyParser</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">body-parser</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">fs</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+<span class="nx">urlencodeParser</span> <span class="o">=</span> <span class="nx">bodyParser</span><span class="p">.</span><span class="nx">urlencoded</span><span class="p">({</span>
+    <span class="na">extended</span><span class="p">:</span> <span class="kc">false</span>
+<span class="p">})</span>
+
+<span class="nx">jsonParser</span> <span class="o">=</span> <span class="nx">bodyParser</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">dir</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="dl">'</span><span class="s1">homepage</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">})</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/form</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">form</span> <span class="o">=</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="dl">'</span><span class="s1">./form.html</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+        <span class="na">encoding</span><span class="p">:</span> <span class="dl">'</span><span class="s1">utf8</span><span class="dl">'</span>
+    <span class="p">})</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">form</span><span class="p">);</span>
+<span class="p">})</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="dl">'</span><span class="s1">/</span><span class="dl">'</span><span class="p">,</span> <span class="nx">urlencodeParser</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">dir</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="dl">'</span><span class="s1">helloworld</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">})</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="dl">'</span><span class="s1">/upload/</span><span class="dl">'</span><span class="p">,</span> <span class="nx">jsonParser</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">dir</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="dl">'</span><span class="s1">helloworld</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">})</span>
+
+
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">3000</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">listen to 3000</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h4 id="multer处理文件上传的库"><code class="highlighter-rouge">multer</code>处理文件上传的库</h4>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">multer</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">multer</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">upload</span> <span class="o">=</span> <span class="nx">multer</span><span class="p">({</span>
+    <span class="na">dest</span><span class="p">:</span> <span class="dl">'</span><span class="s1">uploads/</span><span class="dl">'</span>
+<span class="p">})</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/form</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">form</span> <span class="o">=</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="dl">'</span><span class="s1">./form.html</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+        <span class="na">encoding</span><span class="p">:</span> <span class="dl">'</span><span class="s1">utf8</span><span class="dl">'</span>
+    <span class="p">})</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">form</span><span class="p">);</span>
+    <span class="c1">// res.sendfile(__dirname + '/form.html')</span>
+
+<span class="p">})</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="dl">'</span><span class="s1">/upload/</span><span class="dl">'</span><span class="p">,</span> <span class="nx">upload</span><span class="p">.</span><span class="nx">single</span><span class="p">(</span><span class="dl">'</span><span class="s1">logo</span><span class="dl">'</span><span class="p">),</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// console.dir(req.body);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">({</span>
+        <span class="dl">'</span><span class="s1">ret_code</span><span class="dl">'</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="p">});</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<p>对应的<code class="highlighter-rouge">form.html</code></p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"/upload"</span> <span class="na">method=</span><span class="s">"POST"</span> <span class="na">enctype=</span><span class="s">"multipart/form-data"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;h2&gt;</span>单图上传<span class="nt">&lt;/h2&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"file"</span> <span class="na">name=</span><span class="s">"logo"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"提交"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/form&gt;</span>
+</code></pre></div></div>
+
+<h4 id="模板引擎">模板引擎</h4>
+
+<p>例如<code class="highlighter-rouge">ejs</code></p>
+
+<p>创建一个<code class="highlighter-rouge">views</code>文件夹，里面放入<code class="highlighter-rouge">form.ejs</code>文件</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nt">&lt;h2&gt;&lt;</span><span class="err">%=</span> <span class="na">person</span> <span class="err">%</span><span class="nt">&gt;&lt;/h2&gt;</span>
+    <span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"/upload"</span> <span class="na">method=</span><span class="s">"POST"</span> <span class="na">enctype=</span><span class="s">"multipart/form-data"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;h2&gt;</span>单图上传<span class="nt">&lt;/h2&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"file"</span> <span class="na">name=</span><span class="s">"logo"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"提交"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/form&gt;</span>
+</code></pre></div></div>
+
+<p>修改app.js文件</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">app</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="dl">'</span><span class="s1">view engine</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">ejs</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/form/:name</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">person</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="dl">'</span><span class="s1">form</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+        <span class="na">person</span><span class="p">:</span> <span class="nx">person</span>
+    <span class="p">})</span>
+<span class="p">})</span>
+
+</code></pre></div></div>
+
+<h4 id="中间件">中间件</h4>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">((</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">first middleware</span><span class="dl">'</span><span class="p">);</span>
+    <span class="nx">next</span><span class="p">();</span>
+<span class="p">})</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">((</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">second middleware</span><span class="dl">'</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="dl">'</span><span class="s1">hi</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<p>静态文件，可通过<code class="highlighter-rouge">http://localhost:3000/1.png</code>访问</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="kd">static</span><span class="p">(</span><span class="dl">'</span><span class="s1">static_files</span><span class="dl">'</span><span class="p">));</span>
+</code></pre></div></div>
+
+<h4 id="路由中间件">路由中间件</h4>
+
+<p><code class="highlighter-rouge">routes/index.js</code>文件</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">express</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">router</span> <span class="o">=</span> <span class="nx">express</span><span class="p">.</span><span class="nx">Router</span><span class="p">();</span>
+
+<span class="nx">router</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="dl">'</span><span class="s1">root</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">})</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">router</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">app.js</code>文件</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">express</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">indexRouter</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./routes/index</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">usersRouter</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./routes/users</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="dl">'</span><span class="s1">/</span><span class="dl">'</span><span class="p">,</span> <span class="nx">indexRouter</span><span class="p">)</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="dl">'</span><span class="s1">/users</span><span class="dl">'</span><span class="p">,</span> <span class="nx">usersRouter</span><span class="p">)</span>
+
+
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">3000</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">listen to 3000</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+:ET

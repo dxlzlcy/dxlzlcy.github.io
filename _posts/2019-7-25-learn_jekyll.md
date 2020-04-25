@@ -3,7 +3,55 @@ title: 学习jekyll搭建github page
 category: 学习
 ---
 
+
+
+## [jekyll youtube 教程](https://www.youtube.com/watch?v=pxua_1vyFck&list=PLLAZ4kZ9dFpOPV5C5Ay0pHaa0RJFhcmcB)
+
+### 前期准备
+
+```bash
+jekyll new ga_blog
+cd ga_blog
+bundle exec jekyll serve
+
+```
+
+### frant matter
+
+```yaml
+layout: post
+title:  "Welcome to Jekyll!"
+date:   2020-04-25 11:51:27 +0800
+categories: jekyll update cat2
+```
+
+
+
+
+
+
+
+
+
+
+
+## 老教程
+
+[教程地址](https://www.bilibili.com/video/BV1st411P7BY?from=search&seid=6641841171916982188)
+
 ### 利用`jekyll-now`搭建github page
+
+利用jekyll搭建个人博客
+
+```bash
+sudo gem install jekyll bundler
+
+jekyll new myblog
+cd myblog 
+jekyll serve
+```
+
+
 
 首先fork主页[jekyll-now](https://github.com/barryclark/jekyll-now)，然后创建名为`username.github.io`的仓库
 
@@ -28,17 +76,6 @@ jekyll serve
 git add -A
 git commit -m "aaa"
 git push origin master 
-```
-
-利用jekyll搭建个人博客
-
-```bash
-sudo gem install jekyll
-sudo gem install jekyll bundler
-
-jekyll new myblog
-cd myblog 
-jekyll serve
 ```
 
 
@@ -266,11 +303,18 @@ nothing
 
 可以设置`_config.yml`将某个文件夹的图片都显示出来，[详情请看](https://www.youtube.com/watch?v=fqFjuX4VZmU&list=PLLAZ4kZ9dFpOPV5C5Ay0pHaa0RJFhcmcB&index=18)
 
+### 生成目录树
 
+首先在`_config.yml`文件中添加`markdown:kramdown`一行
 
+然后在文章里需要生成目录树的地方加上
 
+```
+- 目录
+{:toc}
+```
 
-
+搞定
 
 
 

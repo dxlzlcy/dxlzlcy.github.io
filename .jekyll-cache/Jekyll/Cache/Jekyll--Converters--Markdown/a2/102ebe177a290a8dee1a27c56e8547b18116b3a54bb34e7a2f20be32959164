@@ -1,0 +1,129 @@
+I"�<<p>scrapy是一个爬虫框架</p>
+
+<p>[TOC]</p>
+
+<h3 id="创建一个scrapy项目">创建一个scrapy项目</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scrapy startproject aaa
+<span class="nb">cd </span>aaa
+scrapy genspider zfcg htgs.ccgp.gov.cn <span class="c"># 以政府采购爬虫为例，zfcg后面跟的是允许爬的域名</span>
+</code></pre></div></div>
+
+<h3 id="settingspy设置">settings.py设置</h3>
+
+<p>然后编辑<code class="highlighter-rouge">settings.py</code></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Obey robots.txt rules
+</span><span class="n">ROBOTSTXT_OBEY</span> <span class="o">=</span> <span class="bp">False</span>
+
+<span class="n">DEFAULT_REQUEST_HEADERS</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'</span><span class="p">,</span>
+  <span class="s">'Accept-Language'</span><span class="p">:</span> <span class="s">'en'</span><span class="p">,</span>
+  <span class="s">'User-Agent'</span><span class="p">:</span><span class="s">'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36'</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+</code></pre></div></div>
+
+<p>如果配置了<code class="highlighter-rouge">pipelines.py</code>，还要设置</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ITEM_PIPELINES</span> <span class="o">=</span> <span class="p">{</span>
+<span class="c1">#    'wxapp.pipelines.WxappPipeline': 300,
+</span>   <span class="s">'wxapp.pipelines.ZfcgPipeline'</span><span class="p">:</span> <span class="mi">300</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="爬虫文件示例">爬虫文件示例</h3>
+
+<p>然后设置爬虫<code class="highlighter-rouge">zfcg.py</code>，这是crawl spider的一个例子，用<code class="highlighter-rouge">scrapy genspider -t crawl zfcg htgs.ccgp.gov.cn</code>创建，用<code class="highlighter-rouge">Rule(LinkExtractor(allow=r'.*index_\d'), callback='parse_item', follow=True)</code>来过滤允许爬取的网页，可以指定回调函数</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># -*- coding: utf-8 -*-
+</span><span class="kn">import</span> <span class="nn">scrapy</span>
+<span class="kn">from</span> <span class="nn">scrapy.linkextractors</span> <span class="kn">import</span> <span class="n">LinkExtractor</span>
+<span class="kn">from</span> <span class="nn">scrapy.spiders</span> <span class="kn">import</span> <span class="n">CrawlSpider</span><span class="p">,</span> <span class="n">Rule</span>
+
+<span class="n">start</span> <span class="o">=</span> <span class="mi">16000</span> <span class="c1">#可被其他文件调用
+</span><span class="n">end</span> <span class="o">=</span> <span class="mi">18000</span>
+
+<span class="k">class</span> <span class="nc">ZfcgSpider</span><span class="p">(</span><span class="n">CrawlSpider</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">start</span><span class="p">,</span><span class="n">end</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">'zfcg'</span>
+    <span class="n">allowed_domains</span> <span class="o">=</span> <span class="p">[</span><span class="s">'htgs.ccgp.gov.cn'</span><span class="p">]</span>
+    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s">'http://htgs.ccgp.gov.cn/GS8/contractpublish/index_</span><span class="si">%</span><span class="s">s'</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="n">end</span><span class="p">)]</span>
+
+    <span class="n">rules</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">Rule</span><span class="p">(</span><span class="n">LinkExtractor</span><span class="p">(</span><span class="n">allow</span><span class="o">=</span><span class="s">r'.*index_\d'</span><span class="p">),</span> <span class="n">callback</span><span class="o">=</span><span class="s">'parse_item'</span><span class="p">,</span> <span class="n">follow</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+        <span class="n">Rule</span><span class="p">(</span><span class="n">LinkExtractor</span><span class="p">(</span><span class="n">allow</span><span class="o">=</span><span class="s">r'.+GS8/contractpublish/detail.+'</span><span class="p">),</span> <span class="n">callback</span><span class="o">=</span><span class="s">'parse_detail'</span><span class="p">,</span> <span class="n">follow</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">parse_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'='</span><span class="o">*</span><span class="mi">40</span><span class="p">)</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">return</span> <span class="n">item</span>
+
+    <span class="k">def</span> <span class="nf">parse_detail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">response</span><span class="p">):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="p">{</span><span class="s">'url'</span><span class="p">:</span><span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="p">}</span>
+
+        <span class="n">title</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s">'body &gt; div.vT_z.w900 &gt; div.vT_detail_main &gt; div.vT_detail_header &gt; h2::text'</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">item</span><span class="p">[</span><span class="s">'title'</span><span class="p">]</span> <span class="o">=</span> <span class="n">title</span>
+
+        <span class="k">for</span> <span class="n">tr</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s">'tr'</span><span class="p">):</span> 
+            <span class="n">a</span> <span class="o">=</span> <span class="n">tr</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">'.//text()'</span><span class="p">)</span><span class="o">.</span><span class="n">getall</span><span class="p">()</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">a</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">:</span>
+                <span class="n">b</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">''</span><span class="p">)</span>
+            <span class="n">item</span><span class="p">[</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">'：'</span><span class="p">,</span><span class="s">''</span><span class="p">)]</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        
+        <span class="k">yield</span> <span class="n">item</span>
+        <span class="c1"># print(item)
+</span></code></pre></div></div>
+
+<h3 id="scrapy的css选择器用法">scrapy的css选择器用法</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">title</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s">'body &gt; div.vT_z.w900 &gt; div.vT_detail_main &gt; div.vT_detail_header &gt; h2::text'</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="n">href</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s">'h2::attr(href)'</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="pipelinespy示例">pipelines.py示例</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">scrapy.exporters</span> <span class="kn">import</span> <span class="n">JsonLinesItemExporter</span><span class="p">,</span> <span class="n">CsvItemExporter</span><span class="p">,</span><span class="n">JsonItemExporter</span>
+<span class="kn">from</span> <span class="nn">wxapp.spiders</span> <span class="kn">import</span> <span class="n">zfcg</span>
+
+
+<span class="k">class</span> <span class="nc">WxappPipeline</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fp</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"weixin_jiaocheng.json"</span><span class="p">,</span> <span class="s">"wb"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exporter</span> <span class="o">=</span> <span class="n">JsonLinesItemExporter</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fp</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">"utf8"</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">process_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">spider</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exporter</span><span class="o">.</span><span class="n">export_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">item</span>
+
+    <span class="k">def</span> <span class="nf">close_spider</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spider</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">ZfcgPipeline</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"pipeline open"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"*"</span> <span class="o">*</span> <span class="mi">30</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fp</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"zfcg_</span><span class="si">%</span><span class="s">s-</span><span class="si">%</span><span class="s">s.json"</span> <span class="o">%</span> <span class="p">(</span><span class="n">zfcg</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">zfcg</span><span class="o">.</span><span class="n">end</span><span class="p">),</span> <span class="s">"wb"</span><span class="p">)</span>
+        <span class="c1"># self.exporter = CsvItemExporter(self.fp,encoding='utf8')
+</span>        <span class="bp">self</span><span class="o">.</span><span class="n">exporter</span> <span class="o">=</span> <span class="n">JsonLinesItemExporter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fp</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">"utf8"</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">process_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">spider</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exporter</span><span class="o">.</span><span class="n">export_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"exporting"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"*"</span> <span class="o">*</span> <span class="mi">30</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">item</span>
+
+    <span class="k">def</span> <span class="nf">close_spider</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spider</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"pipeline close"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"*"</span> <span class="o">*</span> <span class="mi">30</span><span class="p">)</span>
+</code></pre></div></div>
+
+:ET

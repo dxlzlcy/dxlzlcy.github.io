@@ -1,0 +1,102 @@
+I"<h3 id="git教程-廖雪峰">git教程-廖雪峰</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir </span>learngit
+<span class="nb">cd </span>learngit
+git init
+
+<span class="c"># 然后可以创建a.txt</span>
+git add a.txt 
+git commit <span class="nt">-m</span> <span class="s2">"write new file a.txt"</span> <span class="c"># 提交修改</span>
+
+<span class="c"># 修改a.txt的内容之后，可以查看哪些文件被修改了</span>
+git status
+git diff
+
+<span class="c"># 然后可以再次提交</span>
+git add a.txt
+git status <span class="c">#查看将要提交修改的文件</span>
+git commit <span class="nt">-m</span> <span class="s2">"add a new line"</span>
+
+git log
+git log <span class="nt">--pretty</span><span class="o">=</span>oneline
+
+git reset <span class="nt">--hard</span> <span class="nb">head</span>^
+<span class="nb">cat </span>a.txt
+git reflog
+git reset <span class="nt">--hard</span> 9611
+<span class="nb">cat </span>a.txt
+</code></pre></div></div>
+
+<p>工作区的概念</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vim a.txt <span class="c"># 修改文件</span>
+<span class="nb">echo </span>catwudi <span class="o">&gt;</span> license <span class="c"># 创建一个新文件</span>
+git status
+git add a.txt
+git add license
+git status
+git commit <span class="nt">-m</span> <span class="s2">"工作区是如何工作的"</span>
+git log
+</code></pre></div></div>
+
+<p>撤销修改，就是让这个文件回到最近一次<code class="highlighter-rouge">git commit</code>或<code class="highlighter-rouge">git add</code>时的状态。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout <span class="nt">--</span> a.txt
+
+<span class="c"># 如果已经add到暂存区了</span>
+git reset <span class="nb">head </span>a.txt
+git checkout <span class="nt">--</span> a.txt
+</code></pre></div></div>
+
+<p>删除文件</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 误删</span>
+<span class="nb">rm </span>license
+git checkout <span class="nt">--</span> license
+
+<span class="c"># 真删</span>
+git <span class="nb">rm </span>license
+git commit <span class="nt">-m</span> <span class="s2">"remove license"</span>
+</code></pre></div></div>
+
+<p>远程仓库</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh-keygen <span class="nt">-t</span> rsa <span class="nt">-C</span> <span class="s2">"245593007@qq.com"</span>
+</code></pre></div></div>
+
+<p>在<code class="highlighter-rouge">~/.ssh</code>中会生成两个文件，其中<code class="highlighter-rouge">id_rsa.pub</code>是公钥，配置到github的设置上，</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git remote add origin git@github.com:dxlzlcy/learngit.git
+
+git push <span class="nt">-u</span> origin master <span class="c">#第一次时</span>
+git push origin master
+</code></pre></div></div>
+
+<p>从远程库克隆</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone git@github.com:dxlzlcy/dxlzlcy.github.io <span class="c"># ssh协议</span>
+git clone https://github.com/dxlzlcy/dxlzlcy.github.io.git <span class="c"># http协议</span>
+</code></pre></div></div>
+
+<p>分支管理</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout <span class="nt">-b</span> dev
+<span class="c"># git branch dev</span>
+<span class="c"># git checkout dev # 切换分支</span>
+
+git branch <span class="c"># 查看</span>
+
+<span class="nb">echo </span>hello <span class="o">&gt;</span> helloworld
+git add helloworld
+git commit <span class="nt">-m</span> <span class="s2">"branch test"</span>
+
+git checkout master
+<span class="nb">ls
+
+</span>git merge dev
+<span class="nb">ls
+
+</span>git branch <span class="nt">-d</span> dev
+</code></pre></div></div>
+
+:ET

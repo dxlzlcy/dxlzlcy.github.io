@@ -1,0 +1,354 @@
+I"^�
+<p>学习tkinter开发入门以及一个小demo</p>
+
+<p><code class="highlighter-rouge">tkinter</code>是Python自带的一个gui库，对图像处理库tk的一个封装</p>
+
+<p>其他gui库，<code class="highlighter-rouge">pythonwin</code>,<code class="highlighter-rouge">wxpython</code>,<code class="highlighter-rouge">pyQT</code>，</p>
+
+<h3 id="基本框架">基本框架</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tkinter</span> <span class="k">as</span> <span class="n">tk</span>
+<span class="n">window</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+<span class="n">window</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">'my window'</span><span class="p">)</span>
+<span class="n">window</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s">'200x200'</span><span class="p">)</span>
+
+<span class="n">window</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="标签">标签</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">l</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s">'hello world'</span><span class="p">,</span><span class="n">bg</span><span class="o">=</span><span class="s">'green'</span><span class="p">,</span><span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s">'Arial'</span><span class="p">,</span><span class="mi">12</span><span class="p">),</span><span class="n">width</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span><span class="n">height</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">l</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="c1"># l.place() 可以指定在哪个位置加载
+</span><span class="n">l</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s">'something'</span><span class="p">)</span> <span class="c1">#可以更改文本内容
+</span></code></pre></div></div>
+
+<h3 id="按钮">按钮</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">"hit me"</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">hit_me</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="输入文本框">输入、文本框</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">var</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">()</span>
+<span class="n">var</span><span class="o">.</span><span class="nb">set</span><span class="p">(</span><span class="s">'hello'</span><span class="p">)</span>
+<span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="n">textvariable</span><span class="o">=</span><span class="n">var</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="n">show</span><span class="o">=</span><span class="s">'*'</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="列表">列表</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">var1</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">()</span>
+<span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="n">bg</span><span class="o">=</span><span class="s">'yellow'</span><span class="p">,</span><span class="n">width</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span><span class="n">textvariable</span><span class="o">=</span><span class="n">var1_</span><span class="o">.</span><span class="n">pack</span><span class="p">())</span>
+
+<span class="k">def</span> <span class="nf">print_selection</span><span class="p">():</span>
+  <span class="n">value</span> <span class="o">=</span> <span class="n">lb</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">lb</span><span class="o">.</span><span class="n">curselection</span><span class="p">())</span>
+  <span class="n">var1</span><span class="o">.</span><span class="nb">set</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="n">var2</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">()</span>
+<span class="n">var2</span><span class="o">.</span><span class="nb">set</span><span class="p">((</span><span class="mi">11</span><span class="p">,</span><span class="mi">22</span><span class="p">,</span><span class="mi">33</span><span class="p">,</span><span class="mi">44</span><span class="p">))</span>
+<span class="n">lb</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Listbox</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="n">listvariable</span><span class="o">=</span><span class="n">var2</span><span class="p">)</span>
+
+<span class="n">list_item</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">list_item</span><span class="p">:</span>
+  <span class="n">lb</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s">'end'</span><span class="p">,</span><span class="n">item</span><span class="p">)</span>
+  
+<span class="n">lb</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s">'first'</span><span class="p">)</span>
+<span class="n">lb</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="s">'second'</span><span class="p">)</span>
+<span class="n">lb</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="选择按钮">选择按钮</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">var</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">()</span>
+<span class="n">l</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="n">bg</span><span class="o">=</span><span class="s">'yellow'</span><span class="p">,</span><span class="n">width</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s">'empty'</span><span class="p">)</span>
+<span class="n">l</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">print_selection</span><span class="p">():</span>
+  <span class="n">l</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s">'you have selected '</span><span class="o">+</span><span class="n">var</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+
+<span class="n">tk</span><span class="o">.</span><span class="n">Radiobutton</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s">'Option A'</span><span class="p">,</span><span class="n">variable</span><span class="o">=</span><span class="n">var</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="s">'A'</span><span class="p">,</span><span class="n">command</span><span class="o">=</span><span class="n">print_selection</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="勾选项">勾选项</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tk</span><span class="o">.</span><span class="n">Checkbutton</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s">'python'</span><span class="p">,</span><span class="n">variable</span><span class="o">=</span><span class="n">var</span><span class="p">,</span><span class="n">onvalue</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">offvalue</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="canvas画布">Canvas画布</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">canvas</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Canvas</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="n">bg</span><span class="o">=</span><span class="s">'blue'</span><span class="p">,</span><span class="n">height</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">width</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">image_file</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">PhotoImage</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s">'xxx.gif'</span><span class="p">)</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">create_image</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">anchor</span><span class="o">=</span><span class="s">'nw'</span><span class="p">,</span><span class="n">image</span><span class="o">=</span><span class="n">image_file</span><span class="p">)</span>
+
+<span class="n">x0</span><span class="p">,</span><span class="n">y0</span><span class="p">,</span><span class="n">x1</span><span class="p">,</span><span class="n">y1</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">80</span>
+<span class="n">line</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">create_line</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span><span class="n">y0</span><span class="p">,</span><span class="n">x1</span><span class="p">,</span><span class="n">y1</span><span class="p">)</span>
+<span class="n">oval</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">create_oval</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span><span class="n">y0</span><span class="p">,</span><span class="n">x1</span><span class="p">,</span><span class="n">y1</span><span class="p">,</span><span class="n">fill</span><span class="o">=</span><span class="s">'red'</span><span class="p">)</span>
+
+
+<span class="n">canvas</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="菜单">菜单</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">editmenu</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Menu</span><span class="p">(</span><span class="n">menubar</span><span class="p">,</span><span class="n">tearoff</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">menubar</span><span class="o">.</span><span class="n">add_cascade</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s">'Edit'</span><span class="p">,</span><span class="n">menu</span><span class="o">=</span><span class="n">editmenu</span><span class="p">)</span>
+<span class="n">editmenu</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s">'Cut'</span><span class="p">,</span><span class="n">command</span><span class="o">=</span><span class="n">do_job</span><span class="p">)</span>
+<span class="n">editmenu</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s">'Copy'</span><span class="p">,</span><span class="n">command</span><span class="o">=</span><span class="n">do_job</span><span class="p">)</span>
+<span class="n">editmenu</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s">'Paste'</span><span class="p">,</span><span class="n">command</span><span class="o">=</span><span class="n">do_job</span><span class="p">)</span>
+
+<span class="n">submenu</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Menu</span><span class="p">(</span><span class="n">filemenu</span><span class="p">)</span>
+<span class="n">filemenu</span><span class="o">.</span><span class="n">add_cascade</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s">'Import'</span><span class="p">,</span><span class="n">menu</span><span class="o">=</span><span class="n">submenu</span><span class="p">,</span><span class="n">underline</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">submenu</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s">'Submenu1'</span><span class="p">,</span><span class="n">command</span><span class="o">=</span><span class="n">do_job</span><span class="p">)</span>
+
+<span class="n">window</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">menu</span><span class="o">=</span><span class="n">menubar</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="框架-frame">框架 Frame</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">window</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+<span class="n">window</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">'my window'</span><span class="p">)</span>
+<span class="n">window</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s">'200x200'</span><span class="p">)</span>
+<span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s">'on the window'</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+<span class="n">frm</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+<span class="n">frm</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="n">frm_left</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">frm</span><span class="p">)</span>
+<span class="n">frm_right</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">frm</span><span class="p">)</span>
+<span class="n">frm_left</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s">'left'</span><span class="p">)</span>
+<span class="n">frm_right</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s">'right'</span><span class="p">)</span>
+
+<span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">frm_left</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s">'on the left'</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">frm_left</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s">'on the left'</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">frm_right</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="s">'on the right'</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="弹窗">弹窗</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">hit_me</span><span class="p">():</span>
+    <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">"Hi"</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s">"hahaha"</span><span class="p">)</span>
+    <span class="n">messagebox</span><span class="o">.</span><span class="n">showwarning</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">"Hi"</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s">"hahaha"</span><span class="p">)</span>
+    <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">"Hi"</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s">"hahaha"</span><span class="p">)</span>
+    <span class="n">messagebox</span><span class="o">.</span><span class="n">askquestion</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">"Hi"</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s">"hahaha"</span><span class="p">)</span> <span class="c1"># yes no
+</span>    <span class="n">messagebox</span><span class="o">.</span><span class="n">askyesno</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">"Hi"</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s">"hahaha"</span><span class="p">)</span> <span class="c1"># True False
+</span>
+
+<span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s">"hit me"</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">hit_me</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="放置位置">放置位置</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="s">'left'</span><span class="p">)</span>
+
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+  <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">i</span><span class="p">,</span><span class="n">column</span><span class="o">=</span><span class="n">j</span><span class="p">,</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    
+
+<span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="n">text</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">anchor</span><span class="o">=</span><span class="s">'nw'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="注册窗口">注册窗口</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">usr_sign_up</span><span class="p">():</span>
+  <span class="n">window_sign_up</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Toplevel</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+  <span class="n">window_sign_up</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s">'200x200'</span><span class="p">)</span>
+  <span class="n">window_sign_up</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">'sign up window'</span><span class="p">)</span>
+  <span class="n">window_sign_up</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span> <span class="c1">#不太确定有没写对
+</span></code></pre></div></div>
+
+<h3 id="改变app图标">改变app图标</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tkinter</span> <span class="k">as</span> <span class="n">tk</span>
+
+<span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="s">"photo"</span><span class="p">,</span> <span class="nb">file</span><span class="o">=</span><span class="s">"icon.gif"</span><span class="p">)</span>
+<span class="c1"># root.iconphoto(True, img) # you may also want to try this.
+</span><span class="n">root</span><span class="o">.</span><span class="n">tk</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s">'wm'</span><span class="p">,</span><span class="s">'iconphoto'</span><span class="p">,</span> <span class="n">root</span><span class="o">.</span><span class="n">_w</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+
+<span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="一个小demo">一个小demo</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tkinter</span> <span class="k">as</span> <span class="n">tk</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">messagebox</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+
+
+<span class="n">window</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+<span class="n">window</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">"今天你干了啥"</span><span class="p">)</span>
+<span class="n">window</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s">"1000x800"</span><span class="p">)</span>
+
+<span class="n">img</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span>
+    <span class="s">"photo"</span><span class="p">,</span>
+    <span class="nb">file</span><span class="o">=</span><span class="s">"/Users/liuchengyi/刘承翊/vscode-files/python_files/learn_tkinter/icon.png"</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="c1"># root.iconphoto(True, img) # you may also want to try this.
+</span><span class="n">window</span><span class="o">.</span><span class="n">tk</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s">"wm"</span><span class="p">,</span> <span class="s">"iconphoto"</span><span class="p">,</span> <span class="n">window</span><span class="o">.</span><span class="n">_w</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+
+<span class="n">edit_mode</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">summary_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">"日期"</span><span class="p">:</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">"</span><span class="si">%</span><span class="s">Y-</span><span class="si">%</span><span class="s">m-</span><span class="si">%</span><span class="s">d"</span><span class="p">),</span>
+    <span class="s">"游戏"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s">"学习时间"</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s">"总学习时间"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s">"健身"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s">"早睡"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1">## 打了几把游戏
+</span><span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s">"你今天打了几把游戏"</span><span class="p">)</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">game_num</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">IntVar</span><span class="p">()</span>
+<span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">textvariable</span><span class="o">=</span><span class="n">game_num</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">game_num_plus</span><span class="p">():</span>
+    <span class="n">game_num</span><span class="o">.</span><span class="nb">set</span><span class="p">(</span><span class="n">game_num</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">summary_dict</span><span class="p">[</span><span class="s">"游戏"</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+
+<span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s">"+"</span><span class="p">,</span> <span class="n">fg</span><span class="o">=</span><span class="s">"blue"</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">game_num_plus</span><span class="p">)</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="c1"># 是否健身
+</span>
+<span class="n">jianshen</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">IntVar</span><span class="p">()</span>
+<span class="n">tk</span><span class="o">.</span><span class="n">Checkbutton</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">"健身"</span><span class="p">,</span> <span class="n">variable</span><span class="o">=</span><span class="n">jianshen</span><span class="p">,</span> <span class="n">onvalue</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">offvalue</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">place</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="mi">240</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">20</span>
+<span class="p">)</span>
+
+<span class="c1"># 是否早睡
+</span>
+<span class="n">zaoshui</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">IntVar</span><span class="p">()</span>
+<span class="n">tk</span><span class="o">.</span><span class="n">Checkbutton</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">"早睡"</span><span class="p">,</span> <span class="n">variable</span><span class="o">=</span><span class="n">zaoshui</span><span class="p">,</span> <span class="n">onvalue</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">offvalue</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">place</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="mi">320</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">20</span>
+<span class="p">)</span>
+
+
+<span class="c1">## 学了多久时间
+</span><span class="n">learn_time</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">()</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="mi">0</span>
+
+
+<span class="k">def</span> <span class="nf">start_learn</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">start_time</span>
+    <span class="k">if</span> <span class="n">start_time</span><span class="p">:</span>
+        <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s">"你已经开始学习"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">"本次学习开始时间:</span><span class="si">%</span><span class="s">H时</span><span class="si">%</span><span class="s">M分</span><span class="si">%</span><span class="s">S秒"</span><span class="p">)</span>
+        <span class="n">learn_time</span><span class="o">.</span><span class="nb">set</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">end_learn</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">learn_time</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">summary_dict</span><span class="p">[</span><span class="s">"总学习时间"</span><span class="p">]</span> <span class="o">+=</span> <span class="n">a</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">a</span> <span class="o">//</span> <span class="mi">3600</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">h</span> <span class="o">*</span> <span class="mi">3600</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">a</span> <span class="o">//</span> <span class="mi">60</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">m</span> <span class="o">*</span> <span class="mi">60</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="s">"</span><span class="si">%</span><span class="s">s时</span><span class="si">%</span><span class="s">s分</span><span class="si">%</span><span class="s">s秒"</span> <span class="o">%</span> <span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+    <span class="n">summary_dict</span><span class="p">[</span><span class="s">"学习时间"</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">h</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">s</span><span class="p">])</span>
+    <span class="n">learn_time</span><span class="o">.</span><span class="nb">set</span><span class="p">(</span><span class="s">"本次学习时间:</span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="n">t</span><span class="p">)</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="mi">0</span>
+
+
+<span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s">"开始学习"</span><span class="p">,</span> <span class="n">fg</span><span class="o">=</span><span class="s">"blue"</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">start_learn</span><span class="p">)</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+<span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s">"结束学习"</span><span class="p">,</span> <span class="n">fg</span><span class="o">=</span><span class="s">"blue"</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">end_learn</span><span class="p">)</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+<span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">textvariable</span><span class="o">=</span><span class="n">learn_time</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="c1">### 今日概况
+</span><span class="k">def</span> <span class="nf">count_total_learn_time</span><span class="p">():</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">summary_dict</span><span class="p">[</span><span class="s">"学习时间"</span><span class="p">]:</span>
+        <span class="n">summary_dict</span><span class="p">[</span><span class="s">"总学习时间"</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span>
+
+    <span class="n">total_time</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="ow">in</span> <span class="n">summary_dict</span><span class="p">[</span><span class="s">"学习时间"</span><span class="p">]:</span>
+        <span class="n">total_time</span> <span class="o">+=</span> <span class="mi">3600</span> <span class="o">*</span> <span class="n">h</span> <span class="o">+</span> <span class="mi">60</span> <span class="o">*</span> <span class="n">m</span> <span class="o">+</span> <span class="n">s</span>
+    <span class="n">summary_dict</span><span class="p">[</span><span class="s">"总学习时间"</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_time</span>
+
+
+<span class="k">def</span> <span class="nf">hms</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">a</span> <span class="o">//</span> <span class="mi">3600</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">h</span> <span class="o">*</span> <span class="mi">3600</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">a</span> <span class="o">//</span> <span class="mi">60</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">m</span> <span class="o">*</span> <span class="mi">60</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="s">"</span><span class="si">%</span><span class="s">s时</span><span class="si">%</span><span class="s">s分</span><span class="si">%</span><span class="s">s秒"</span> <span class="o">%</span> <span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">t</span>
+
+
+<span class="k">def</span> <span class="nf">show_summary</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">edit_mode</span>
+    <span class="n">edit_mode</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">summary_dict</span><span class="p">[</span><span class="s">"健身"</span><span class="p">]</span> <span class="o">=</span> <span class="n">jianshen</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+    <span class="n">summary_dict</span><span class="p">[</span><span class="s">"早睡"</span><span class="p">]</span> <span class="o">=</span> <span class="n">zaoshui</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+    <span class="c1"># today_summary.set(str(summary_dict))
+</span>    <span class="n">txt</span> <span class="o">=</span> <span class="s">""</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">summary_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="s">"总学习时间"</span><span class="p">:</span>
+            <span class="n">txt</span> <span class="o">+=</span> <span class="s">"</span><span class="si">%</span><span class="s">s:</span><span class="si">%</span><span class="s">s</span><span class="se">\n</span><span class="s">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">hms</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">k</span> <span class="o">==</span> <span class="s">"学习时间"</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">txt</span> <span class="o">+=</span> <span class="s">"</span><span class="si">%</span><span class="s">s:</span><span class="si">%</span><span class="s">s</span><span class="se">\n</span><span class="s">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+    <span class="n">today_summary</span><span class="o">.</span><span class="nb">set</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">edit</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">summary_dict</span>
+    <span class="n">today_summary</span><span class="o">.</span><span class="nb">set</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">summary_dict</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">finish</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">summary_dict</span>
+    <span class="n">summary_dict</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">today_summary</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+    <span class="n">count_total_learn_time</span><span class="p">()</span>
+    <span class="c1"># messagebox.showinfo(message="修改成功")
+</span>    <span class="n">show_summary</span><span class="p">()</span>
+
+
+<span class="n">today_summary</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">()</span>
+<span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">textvariable</span><span class="o">=</span><span class="n">today_summary</span><span class="p">)</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+<span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s">"编辑"</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">edit</span><span class="p">)</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">700</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s">"完成"</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">finish</span><span class="p">)</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">740</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s">"show"</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">show_summary</span><span class="p">)</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">130</span><span class="p">)</span>
+
+
+<span class="c1">### 保存
+</span><span class="k">def</span> <span class="nf">save_today</span><span class="p">():</span>
+    <span class="c1"># messagebox.showinfo(message=summary_dict)
+</span>    <span class="n">a</span> <span class="o">=</span> <span class="n">today_summary</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">a</span><span class="p">:</span>
+        <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s">"请先点击show"</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="n">b</span> <span class="o">=</span> <span class="n">summary_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">b</span><span class="p">[</span><span class="s">"学习时间"</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="s">"学习时间"</span><span class="p">])</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"record.csv"</span><span class="p">)</span>
+        <span class="n">ind</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">a</span><span class="o">.</span><span class="err">日期</span> <span class="o">!=</span> <span class="n">b</span><span class="p">[</span><span class="s">"日期"</span><span class="p">]]</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">df</span><span class="p">],</span> <span class="n">sort</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s">"record.csv"</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="s">"record.xls"</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s">"保存成功"</span><span class="p">)</span>
+
+
+<span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s">"save"</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">save_today</span><span class="p">)</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">130</span><span class="p">)</span>
+
+
+<span class="n">window</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+
+
+</code></pre></div></div>
+
+:ET

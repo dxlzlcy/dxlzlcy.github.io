@@ -1,0 +1,91 @@
+I"q&<p>以后再分类</p>
+
+<h3 id="python提取excel中的超链接">Python提取excel中的超链接</h3>
+
+<p>可以用<code class="highlighter-rouge">xlrd</code>库中的<code class="highlighter-rouge">hyperlink_map</code></p>
+
+<ul>
+  <li>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">xlrd</span>
+<span class="n">mainData_book</span> <span class="o">=</span> <span class="n">xlrd</span><span class="o">.</span><span class="n">open_workbook</span><span class="p">(</span><span class="s">"IEsummary.xls"</span><span class="p">,</span> <span class="n">formatting_info</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">mainData_sheet</span> <span class="o">=</span> <span class="n">mainData_book</span><span class="o">.</span><span class="n">sheet_by_index</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">link</span> <span class="o">=</span> <span class="n">mainData_sheet</span><span class="o">.</span><span class="n">hyperlink_map</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">))</span> <span class="c1"># row和col分别为要提取超链接信息的单元格行和列
+</span><span class="n">url</span><span class="o">=</span><span class="n">link</span><span class="o">.</span><span class="n">url_or_path</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>如C1单元格的内容为=HYPERLINK(“http://snap.windin.com/ns/bulletin.php?id=88214874&amp;type=1”, “宏辉果蔬:关于2017年第三季度使用部分闲置自有资金购买理财产品的公告”)，则无法利用上述方法进行提取。可以先提取公式文本，再对文本进行提取</p>
+
+<p>对于Excel2013及以上版本，有函数FORMULATEXT(reference)用于直接提取</p>
+
+<h3 id="python下载pdf">python下载pdf</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">urllib</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">'http://xxxxxx.pdf'</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'a.pdf'</span><span class="p">,</span><span class="s">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+  <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="python读取pdf中文内容">python读取pdf中文内容</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pdfminer.pdfinterp</span> <span class="kn">import</span> <span class="n">PDFResourceManager</span><span class="p">,</span> <span class="n">process_pdf</span>
+<span class="kn">from</span> <span class="nn">pdfminer.converter</span> <span class="kn">import</span> <span class="n">TextConverter</span><span class="p">,</span> <span class="n">HTMLConverter</span>
+<span class="kn">from</span> <span class="nn">pdfminer.layout</span> <span class="kn">import</span> <span class="n">LAParams</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span><span class="p">,</span> <span class="nb">open</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">def</span> <span class="nf">readPDF</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
+    <span class="n">rsrcmgr</span> <span class="o">=</span> <span class="n">PDFResourceManager</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+    <span class="n">retstr</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+    <span class="n">laparams</span> <span class="o">=</span> <span class="n">LAParams</span><span class="p">(</span><span class="n">all_texts</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+    <span class="n">device</span> <span class="o">=</span> <span class="n">TextConverter</span><span class="p">(</span><span class="n">rsrcmgr</span><span class="p">,</span> <span class="n">retstr</span><span class="p">,</span> <span class="n">laparams</span><span class="o">=</span><span class="n">laparams</span><span class="p">)</span>
+    <span class="nb">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)</span>
+    <span class="n">process_pdf</span><span class="p">(</span><span class="n">rsrcmgr</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="nb">file</span><span class="p">)</span>
+    <span class="nb">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">device</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">retstr</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+    <span class="n">retstr</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">)):</span>
+        <span class="n">content</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">content</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">content</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">'第'</span><span class="p">)</span> <span class="ow">and</span> <span class="n">content</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">'页'</span><span class="p">):</span>
+            <span class="n">content</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="s">''</span>
+        <span class="k">if</span> <span class="n">content</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">'共'</span><span class="p">)</span> <span class="ow">and</span> <span class="n">content</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">'页'</span><span class="p">):</span>
+            <span class="n">content</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="s">''</span>
+    <span class="k">while</span> <span class="s">''</span> <span class="ow">in</span> <span class="n">content</span><span class="p">:</span>
+        <span class="n">content</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">''</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">content</span>
+</code></pre></div></div>
+
+<h3 id="fusuma---使用markdown语法轻松制作幻灯片">Fusuma - 使用Markdown语法轻松制作幻灯片</h3>
+
+<p><a href="https://www.bilibili.com/video/av52571552?from=search&amp;seid=3607117845367141986">b站视频地址</a></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/temp
+<span class="nb">mkdir </span>myweb
+<span class="nb">cd </span>myweb 
+npm init <span class="nt">-y</span>
+npm i fusuma <span class="nt">--save-dev</span>
+npx fusuma init 
+</code></pre></div></div>
+
+<h3 id="用hexo搭建博客">用hexo搭建博客</h3>
+
+<p><a href="https://www.bilibili.com/video/av60124681">b站视频地址</a></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install </span>hexo-cli <span class="nt">-g</span>	
+hexo init blog 
+<span class="nb">cd </span>blog 
+npm <span class="nb">install 
+</span>hexo server
+</code></pre></div></div>
+
+<h3 id="一些有意思的javascript代码可在chrome浏览器地址栏直接输入">一些有意思的javascript代码，可在Chrome浏览器地址栏直接输入</h3>
+
+<p>可以直接编辑网页内容：</p>
+
+<p><code class="highlighter-rouge">javascript:document.body.contentEditable = 'true';document.designMode = 'on';void(0);</code></p>
+
+:ET
